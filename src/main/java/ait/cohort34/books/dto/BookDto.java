@@ -2,14 +2,13 @@ package ait.cohort34.books.dto;
 
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 public class BookDto {
-    int isbn;
+    String isbn;
     String title;
-    String authors;
-    AuthorDto author;
+    Set<AuthorDto> authors;
     String publisher;
 }
 

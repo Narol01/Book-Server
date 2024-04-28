@@ -1,17 +1,30 @@
 package ait.cohort34.books.model;
 
-import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
-@Embeddable
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of="name")
+@Setter
+@Entity
+@Table(name="author")
+@ToString
 public class Author {
-    String name;
+    @Id
+    @Column(name = "name")
+String name;
+    @Column(name = "birth_date")
     LocalDate birthDate;
+    @ManyToMany(mappedBy = "authors",cascade = CascadeType.REMOVE)
+    Set<Book> books;
+    public Author(String authorsName, LocalDate birthDate) {
+        this.name = authorsName;
+        this.birthDate = birthDate;
+    }
 }

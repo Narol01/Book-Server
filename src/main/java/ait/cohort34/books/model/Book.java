@@ -1,23 +1,31 @@
 package ait.cohort34.books.model;
 
-import ait.cohort34.books.dto.AuthorDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(of="isbn")
 @Entity
-@Table(name="books")
-@Inheritance(strategy= InheritanceType.JOINED)
+@Table(name = "books")
 public class Book {
     @Id
-    int isbn;
-    @Setter
+    @Column(name = "isbn")
+    String isbn;
+    @Column(name = "title")
     String title;
-    String authors;
-    Author author;
-    String publisher;
+    @ManyToMany
+    @JoinTable(
+            name = "book_authors",
+            joinColumns = @JoinColumn(name = "book_isbn"),
+            inverseJoinColumns = @JoinColumn(name="authors_name")
+    )
+    Set<Author> authors;
+    @ManyToOne
+    Publisher publisher;
 }
