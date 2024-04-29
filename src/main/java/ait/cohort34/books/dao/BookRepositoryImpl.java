@@ -20,7 +20,9 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void deleteByAuthorsName(String name) {
-    //todo
+    em.createQuery("delete from Book b where?1 member of b.authors")
+        .setParameter(1,name)
+            .executeUpdate();
     }
 
     @Override
