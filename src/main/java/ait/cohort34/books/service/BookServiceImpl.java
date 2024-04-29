@@ -87,12 +87,12 @@ public class BookServiceImpl implements BookService {
         return publisherRepository.findByPublishersAuthors(author);
     }
 
-    @Transactional(readOnly = true)
+
+    @Transactional
     @Override
-    public AuthorDto  removeAuthorByName(String author) {
-        Author author1 = authorRepository.findById(author).orElseThrow(PersonNotFoundException::new);
-        bookRepository.deleteByAuthorsName(author);
-        authorRepository.deleteById(author);
-        return modelMapper.map(author1, AuthorDto.class);
+    public AuthorDto removeAuthorByName(String authorName) {
+        Author author = authorRepository.findById(authorName).orElseThrow(PersonNotFoundException::new);
+        authorRepository.deleteById(authorName);
+        return modelMapper.map(author, AuthorDto.class);
     }
 }
